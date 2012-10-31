@@ -5,15 +5,17 @@ var fs = require('fs')
   , path = require('path')
   , dashku = require('../')
   , optimist = require('optimist')
+  , cc = require('config-chain')
   , cwd = process.cwd()
   , folder = path.basename(cwd)
-  , config
   , html
   , css
   , json
   , script
-  , usage = 'Expects a config.json file with { apiKey, dashboardId, widgetId }'
-      + '\nand optional { scriptType, apiUrl, name, snapshortUrl }.'
+  , configOpts = [ "apiKey", "dashboardId", "widgetId", "scriptType", "apiUrl", "name", "snapshotUrl" ]
+  , usage = 'You can configure ' + configOpts.join(', ')
+      + '\nby cli argument, specified --config file, ./config.json, (../)+config.json,'
+      + '\nor dashku_ env var, in that order. Defaults provided for non-critical options.'
       + '\nHTML, CSS, test JSON, and script'
       + '\nare saved as `widget.html`, `widget.css`, `widget.json`, and'
       + '\neither `widget.js` or `widget.coffee`'
@@ -45,19 +47,20 @@ var argv = optimist.usage(usage + '\nUsage: $0')
     , describe: 'Ping widget with test packet'
     }).argv
 
-try {
-  config = JSON.parse(fs.readFileSync(path.join(cwd, 'config.json'), 'utf8'))
-} catch (e) {
-  optimist.showHelp()
-  console.log('Error reading config.json')
-  process.exit()
-}
+var config = cc( argv
+  , argv.config
+  , find('config.json')
+  , cc.env('dashku_')
+  , { scriptType: 'javascript'
+    , name: folder
+    , snapshotUrl: '/images/widgetTemplates/' + folder + '.png'
+    }
+  ).store
 
-// Fill in defaults for config
-if (!config.name) config.name = folder
-if (!config.scriptType) config.scriptType = 'javascript'
-if (!config.snapshotUrl) {
-  config.snapshotUrl = '/images/widgetTemplates/' + folder + '.png'
+if (!config.apiKey) {
+  optimist.showHelp()
+  console.log('Must provide an apiKey: argument, config.json, or dashku_apiKey env var.')
+  process.exit()
 }
 
 dashku.setApiKey(config.apiKey)
@@ -79,6 +82,7 @@ if (argv.p) {
 
   var newWidget =
     { dashboardId: config.dashboardId
+    , name: config.name
     , _id: config.widgetId
     , html: html
     , css: css
@@ -108,6 +112,16 @@ if (argv.p) {
     }
     fs.writeFile('widget.css', widget.css)
     fs.writeFile('widget.html', widget.html)
+    fs.exists(path.join(cwd, 'config.json'), function (exists) {
+      var configFile = {}
+      if (!exists) {
+        configOpts.forEach(function (d) {
+          var opt = widget[d] || config[d]
+          if (opt !== undefined) configFile[d] = opt
+        })
+        fs.writeFile('config.json', JSON.stringify(configFile, null, 2))
+      }
+    })
   })
 
 } else if (argv.t) {
@@ -166,11 +180,18 @@ if (argv.p) {
     }
 
   dashku.createWidget(newWidget, function (res) {
-    if (!config.widgetId) {
-      config.widgetId = res.widget._id
-      fs.writeFile('config.json', JSON.stringify(config, null, 2))
-    } else console.log('Created: ' + res.widget._id)
+    var configFile = {}
     console.log(res.status)
+    if (res.widget) {
+      if (!config.widgetId) {
+        config.widgetId = res.widget._id
+        configOpts.forEach(function (d) {
+          var opt = config[d]
+          if (opt !== undefined) configFile[d] = opt
+        })
+        fs.writeFile('config.json', JSON.stringify(configFile, null, 2))
+      } else console.log('Created: ' + res.widget._id)
+    }
   })
 }else {
   optimist.showHelp()
@@ -190,5 +211,18 @@ function conf (example) {
   example.apiKey = config.apiKey
   example._id = config.widgetId
   return JSON.stringify(example, null, 2)
+}
+
+function find (name) {
+  return find (cwd)
+  function find (dir) {
+    var file = path.join(dir, name)
+    try {
+      fs.statSync(file)
+      return file
+    } catch (e) {
+      if (dir != '/') return find(path.dirname(dir))
+    }
+  }
 }
 
