@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "request":"latest",
+    "config-chain":"latest",
     "optimist":"latest"
   },
   "devDependencies": {
