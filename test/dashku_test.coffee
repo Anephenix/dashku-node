@@ -2,7 +2,8 @@ assert    = require 'assert'
 request   = require 'request'
 dashku    = require '../src/dashku'
 
-apiKey    = "c19cabb2-85d6-4be0-b1d6-d85a19b8245e"
+apiKey    = "6c9fd252-9e00-46bc-8601-159a9671b0dd"
+apiUrl    = "http://localhost:3000"
 
 describe 'Dashku', ->
 
@@ -21,7 +22,7 @@ describe 'Dashku', ->
       url = 'https://localhost'
       dashku.setApiUrl url, ->
         assert.equal dashku.apiUrl, url
-        dashku.setApiUrl 'http://localhost', ->
+        dashku.setApiUrl apiUrl, ->
           done()
 
   describe "Dashboards", ->
@@ -115,7 +116,7 @@ describe 'Dashku', ->
           dashboardId = dashboard._id for dashboard in response.dashboards when dashboard.name is "ZZZ dashboard"        
           dashku.deleteDashboard dashboardId, (response) ->
             assert.equal response.status, 'success'
-            assert.equal response.dashboardId, JSON.stringify {dashboardId}
+            assert.equal response.dashboardId, dashboardId
             done()
 
       it "should throw an error if the response fails", (done) ->
@@ -213,7 +214,7 @@ describe 'Dashku', ->
 
             dashku.updateWidget updatedAttributes, (response) ->
               assert response.status is 'failure'
-              assert response.reason is "Widget with id: WAA not found"
+              assert response.reason is "No widget found with id WAA"
               dashku.deleteDashboard dashboardId, (response) ->
                 done()
 
@@ -235,7 +236,7 @@ describe 'Dashku', ->
             widgetId = response.widget._id
             dashku.deleteWidget dashboardId, widgetId, (response) ->
               assert.equal response.status, 'success' 
-              assert.equal response.widgetId, JSON.stringify {widgetId}
+              assert.equal response.widgetId, widgetId
               dashku.deleteDashboard dashboardId, (response) ->
                 done()
 
@@ -258,6 +259,18 @@ describe 'Dashku', ->
               assert.equal response.reason, 'No dashboard found with id Waa'
               dashku.deleteDashboard dashboardId, (response) ->
                 done()
+
+    describe "getWidgets()", ->
+
+      it "should return an array of widget objects for a given dashboard" 
+
+      it "should throw an error if the response fails"
+
+    describe "getWidget()", ->
+
+      it "should return a widget object, given a widget id"
+
+      it "should throw an error if the response fails"
 
   describe 'transmission', ->
 

@@ -15,8 +15,9 @@ exports.setApiUrl = (value, cb=null) ->
 # returns all of the user's dashboards
 exports.getDashboards = (cb) ->
   url     = "#{@apiUrl}/api/dashboards?apiKey=#{@apiKey}"
-  json    = true
-  request.get {url, json}, (err,res,body) ->
+  headers = accept: "application/json"
+  request.get {url,headers}, (err,res,body) ->
+    body = JSON.parse body
     if res.statusCode is 200
       cb status: 'success', dashboards: body
     else
@@ -25,8 +26,9 @@ exports.getDashboards = (cb) ->
 # returns a dashboard
 exports.getDashboard = (id, cb) ->
   url     = "#{@apiUrl}/api/dashboards/#{id}?apiKey=#{@apiKey}"
-  json    = true
-  request.get {url, json}, (err,res,body) ->
+  headers = accept: "application/json"
+  request.get {url, headers}, (err,res,body) ->
+    body = JSON.parse body
     if res.statusCode is 200
       cb status: 'success', dashboard: body
     else
@@ -55,9 +57,11 @@ exports.updateDashboard = (body, cb=null) ->
 # deletes a dashboard
 exports.deleteDashboard = (dashboardId, cb=null) ->
   url     = "#{@apiUrl}/api/dashboards/#{dashboardId}?apiKey=#{@apiKey}"
-  request.del url, (err,res,body) ->
+  headers = accept: "application/json"
+  method  = "DELETE"
+  request.del {method, url, headers}, (err,res,body) ->
     if res.statusCode is 201
-      cb status: 'success', dashboardId: body
+      cb JSON.parse body
     else
       cb JSON.parse body
 
@@ -84,10 +88,11 @@ exports.updateWidget = (body, cb=null) ->
 # deletes a widget
 exports.deleteWidget = (dashboardId, widgetId, cb=null) ->
   url     = "#{@apiUrl}/api/dashboards/#{dashboardId}/widgets/#{widgetId}?apiKey=#{@apiKey}"
-  json    = true
-  request.del url, (err,res,body) ->
+  headers = accept: "application/json"
+  method  = "DELETE"
+  request {method, url, headers}, (err,res,body) ->
     if res.statusCode is 201
-      cb status: 'success', widgetId: body
+      cb JSON.parse body
     else
       cb JSON.parse body
 

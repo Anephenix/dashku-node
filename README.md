@@ -1,7 +1,7 @@
 Dashku npm
 ===========
 
-A wrapper to the [dashku.com](http://dashku.com) API
+A wrapper to the [dashku.com](http://dashku.com) API. Now made to work with Dashku open source edition.
 
 Install
 ---
@@ -12,7 +12,6 @@ Example Usage
 ---
 
 Require the library and set your api key.
-
 
 ```javascript
 
@@ -29,7 +28,8 @@ Require the library and set your api key.
     });
 
 ```
- 
+
+NOTE: If you're using Dashku open source edition, make sure to call setApiUrl in order to point the API wrapper to your hosted version of Dashku. 
 
 Available Commands
 ---
@@ -349,12 +349,7 @@ Transmits data to an existing widget, given an object that can be converted to J
 
 ```
    
-License     
----
-
-MIT
-
 Copyright
 ---
 
-&copy; 2012 Paul Jensen
+&copy; 2012 Anephenix Ltd. Dashku-node is licensed under the MIT License.
