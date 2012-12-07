@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/paulbjensen/dashku-node.png)](http://travis-ci.org/paulbjensen/dashku-node)
 Dashku npm
 ===========
 
