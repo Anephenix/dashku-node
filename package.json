@@ -3,7 +3,7 @@
   "contributors": [ "Nick Niemeir <nick.niemeir@gmail.com>" ],
   "name": "dashku",
   "description": "A wrapper to the dashku API",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/Anephenix/dashku-node",
   "repository": {
     "type": "git",

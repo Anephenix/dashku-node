@@ -1,6 +1,6 @@
 request         = require 'request'
 # Pointing directly to dashku.com's ip address due to DNS issue with hitting dashku.com.
-@apiUrl         = "http://176.58.100.203" 
+@apiUrl         = "https://dashku.com" 
 
 # Sets the api key used by the client
 exports.setApiKey = (value, cb=null) ->
