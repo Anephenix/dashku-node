@@ -5,12 +5,11 @@
 // Dependencies
 //
 var assert    = require('assert'),
-    request   = require('request'),
-    dashku    = require('../lib/dashku');
+	dashku    = require('../lib/dashku');
 
 
 
-// These are the variables we use to interact with the 
+// These are the variables we use to interact with the
 // user and the API - TODO - get these programmatically.
 //
 var apiKey    = 'a4f368ba-0a46-4e3f-a2fd-f1b68ffe64af';
@@ -22,503 +21,501 @@ describe('Dashku', function () {
 
 
 
-  describe('setApiKey', function () {
+	describe('setApiKey', function () {
 
-    it('should set the api key for the library', function (done) {
+		it('should set the api key for the library', function (done) {
 
-      var key = 'a-random-key';
-      dashku.setApiKey(key, function () {
-        assert.equal(dashku.apiKey, key);
-        done();
-      });
+			var key = 'a-random-key';
+			dashku.setApiKey(key, function () {
+				assert.equal(dashku.apiKey, key);
+				done();
+			});
 
-    });
+		});
 
 
-  });
+	});
 
 
-  describe('setApiUrl', function () {
+	describe('setApiUrl', function () {
 
-    it('should set the api url for the library', function (done) {
+		it('should set the api url for the library', function (done) {
 
-      var url = 'https://localhost';
-      dashku.setApiUrl(url, function () {
-        assert.equal(dashku.apiUrl, url);
-        dashku.setApiUrl(apiUrl, done);
-      });
+			var url = 'https://localhost';
+			dashku.setApiUrl(url, function () {
+				assert.equal(dashku.apiUrl, url);
+				dashku.setApiUrl(apiUrl, done);
+			});
 
-    });
+		});
 
-  });
+	});
 
-  describe('Dashboards', function () {
+	describe('Dashboards', function () {
 
 
-    describe('getDashboards()', function () {
+		describe('getDashboards()', function () {
 
-      it('should return an array of dashboard objects', function (done) {
+			it('should return an array of dashboard objects', function (done) {
 
-        dashku.setApiKey(apiKey, function () {
-          dashku.getDashboards(function (response) {
-            assert.equal(response.status, 'success');
-            assert(response.dashboards instanceof Array);
-            done();
-          });
-        });
+				dashku.setApiKey(apiKey, function () {
+					dashku.getDashboards(function (response) {
+						assert.equal(response.status, 'success');
+						assert(response.dashboards instanceof Array);
+						done();
+					});
+				});
 
-      });
+			});
 
-      it('should throw an error if the response fails', function (done) {
+			it('should throw an error if the response fails', function (done) {
 
-        dashku.setApiKey('waa', function () {
-          dashku.getDashboards(function (response) {
-            assert.equal(response.status, 'failure');
-            assert.equal(response.reason, 'Couldn\'t find a user with that API key');
-            done();
-          });
-        });
+				dashku.setApiKey('waa', function () {
+					dashku.getDashboards(function (response) {
+						assert.equal(response.status, 'failure');
+						assert.equal(response.reason, 'Couldn\'t find a user with that API key');
+						done();
+					});
+				});
 
-      });
+			});
 
-    });
+		});
 
-    describe('getDashboard()', function () {
+		describe('getDashboard()', function () {
 
-      it('should return a dashboard object, given an id', function (done) {
-        dashku.setApiKey(apiKey, function () {
-          dashku.getDashboards(function (response) {
-            var dashboardId = response.dashboards[0]._id;
-            dashku.getDashboard(dashboardId, function (response) {
-              assert.equal(response.status, 'success');
-              assert(response.dashboard instanceof Object);
-              done();
-            });
-          });
-        });
-      });
+			it('should return a dashboard object, given an id', function (done) {
+				dashku.setApiKey(apiKey, function () {
+					dashku.getDashboards(function (response) {
+						var dashboardId = response.dashboards[0]._id;
+						dashku.getDashboard(dashboardId, function (response) {
+							assert.equal(response.status, 'success');
+							assert(response.dashboard instanceof Object);
+							done();
+						});
+					});
+				});
+			});
 
-      it('should throw an error if the response fails', function (done) {
-        dashku.setApiKey(apiKey, function () {
-          var dashboardId = 'rubbish';
-          dashku.getDashboard(dashboardId, function (response) {
-            assert.equal(response.status, 'failure');
-            assert.equal(response.reason, 'Dashboard not found');
-            done();
-          });
-        });
-      });
+			it('should throw an error if the response fails', function (done) {
+				dashku.setApiKey(apiKey, function () {
+					var dashboardId = 'rubbish';
+					dashku.getDashboard(dashboardId, function (response) {
+						assert.equal(response.status, 'failure');
+						assert.equal(response.reason, 'Dashboard not found');
+						done();
+					});
+				});
+			});
 
-    });
+		});
 
 
-    describe('createDashboard()', function () {
+		describe('createDashboard()', function () {
 
-      it('should return a dashboard object, given attributes', function (done) {
-        dashku.setApiKey(apiKey, function () {
+			it('should return a dashboard object, given attributes', function (done) {
+				dashku.setApiKey(apiKey, function () {
 
-          var attributes = {
-            name: 'My new dashboard'            
-          };
-          dashku.createDashboard(attributes, function (response) {
-            assert.equal(response.status, 'success');
-            assert(response.dashboard instanceof Object);
-            assert.equal(response.dashboard.name, attributes.name);
-            done();
-          });
+					var attributes = {
+						name: 'My new dashboard'
+					};
+					dashku.createDashboard(attributes, function (response) {
+						assert.equal(response.status, 'success');
+						assert(response.dashboard instanceof Object);
+						assert.equal(response.dashboard.name, attributes.name);
+						done();
+					});
 
-        });
+				});
 
-      });
+			});
 
-      it('should throw an error if the response fails', function (done) {
-        dashku.setApiKey('waa', function () {
+			it('should throw an error if the response fails', function (done) {
+				dashku.setApiKey('waa', function () {
 
-          var attributes = {
-            name: 'My new dashboard'
-          };
-          dashku.createDashboard(attributes, function (response) {
+					var attributes = {
+						name: 'My new dashboard'
+					};
+					dashku.createDashboard(attributes, function (response) {
 
-            assert.equal(response.status, 'failure');
-            assert.equal(response.reason, 'Couldn\'t find a user with that API key');
-            done();
+						assert.equal(response.status, 'failure');
+						assert.equal(response.reason, 'Couldn\'t find a user with that API key');
+						done();
 
-          });
+					});
 
-        });
+				});
 
-      });
+			});
 
-    });
+		});
 
 
-    describe('updateDashboard()', function () {
+		describe('updateDashboard()', function () {
 
-      it('should return a dashboard object, given attributes', function (done) {
+			it('should return a dashboard object, given attributes', function (done) {
 
-        dashku.setApiKey(apiKey, function () {
+				dashku.setApiKey(apiKey, function () {
 
-          dashku.getDashboards(function (response) {
+					dashku.getDashboards(function (response) {
 
-            var dashboardId;
+						var dashboardId;
 
-            response.dashboards.forEach(function (dashboard) { if (dashboard.name === 'My new dashboard') dashboardId = dashboard._id });
+						response.dashboards.forEach(function (dashboard) { if (dashboard.name === 'My new dashboard') { dashboardId = dashboard._id;}  });
 
-            var attributes = {
-              _id: dashboardId,
-              name: 'ZZZ dashboard'
-            };
+						var attributes = {
+							_id: dashboardId,
+							name: 'ZZZ dashboard'
+						};
 
-            dashku.updateDashboard(attributes, function (response) {
+						dashku.updateDashboard(attributes, function (response) {
 
-              assert.equal(response.status, 'success');
-              assert(response.dashboard instanceof Object);
-              assert.equal(response.dashboard.name, attributes.name);
-              done();
+							assert.equal(response.status, 'success');
+							assert(response.dashboard instanceof Object);
+							assert.equal(response.dashboard.name, attributes.name);
+							done();
 
-            });
+						});
 
-          });
+					});
 
 
-        });
-      
-      });
+				});
 
-      it('should throw an error if the response fails', function (done) {
+			});
 
-        var attributes = {
-          _id: 'Rubbish',
-          name: 'ZZZ dashboard'
-        };
+			it('should throw an error if the response fails', function (done) {
 
-        dashku.updateDashboard(attributes, function (response) {
+				var attributes = {
+					_id: 'Rubbish',
+					name: 'ZZZ dashboard'
+				};
 
-          assert.equal(response.status, 'failure');
-          assert.equal(response.reason, 'Dashboard not found');
-          done();
+				dashku.updateDashboard(attributes, function (response) {
 
-        });
+					assert.equal(response.status, 'failure');
+					assert.equal(response.reason, 'Dashboard not found');
+					done();
 
-      });
+				});
 
-    });
+			});
 
+		});
 
-    describe('deleteDashboard()', function () {
 
-      it('should return the id of the deleted dashboard', function (done) {
+		describe('deleteDashboard()', function () {
 
-        dashku.getDashboards(function (response) {
+			it('should return the id of the deleted dashboard', function (done) {
 
-          var dashboardId;
+				dashku.getDashboards(function (response) {
 
-          response.dashboards.forEach(function (dashboard) { if (dashboard.name === 'ZZZ dashboard') dashboardId = dashboard._id; });
+					var dashboardId;
 
-          dashku.deleteDashboard(dashboardId, function (response) {
-            assert.equal(response.status, 'success');
-            assert.equal(response.dashboardId, dashboardId);
-            done();
-          });
+					response.dashboards.forEach(function (dashboard) { if (dashboard.name === 'ZZZ dashboard') {dashboardId = dashboard._id;} });
 
-        });
+					dashku.deleteDashboard(dashboardId, function (response) {
+						assert.equal(response.status, 'success');
+						assert.equal(response.dashboardId, dashboardId);
+						done();
+					});
 
-      });
+				});
 
-      it('should throw an error if the response fails', function (done) {
+			});
 
-        dashku.deleteDashboard('Rubbish', function (response) {
+			it('should throw an error if the response fails', function (done) {
 
-          assert.equal(response.status, 'failure');
-          assert.equal(response.reason, 'Dashboard not found');
-          done();
+				dashku.deleteDashboard('Rubbish', function (response) {
 
-        });
+					assert.equal(response.status, 'failure');
+					assert.equal(response.reason, 'Dashboard not found');
+					done();
 
-      });
+				});
 
-    });
+			});
 
-  });
+		});
 
+	});
 
 
-  describe('Widgets', function () {
 
+	describe('Widgets', function () {
 
-    describe('createWidget()', function () {
 
+		describe('createWidget()', function () {
 
-      it('should return the widget object', function (done) {
 
-        var data = {name: 'ZZZ dashboard'};
-        dashku.createDashboard(data, function (response) {
+			it('should return the widget object', function (done) {
 
-          var dashboardId = response.dashboard._id;
-          var attributes = {
-            dashboardId:  dashboardId,
-            name:         'My little widgie',
-            html:         '<div id=\'bigNumber\'></div>',
-            css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
-            script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
-            json:         '{\n  "bigNumber":500\n}'          
-          };
+				var data = {name: 'ZZZ dashboard'};
+				dashku.createDashboard(data, function (response) {
 
-          dashku.createWidget(attributes, function (response) {
+					var dashboardId = response.dashboard._id;
+					var attributes = {
+						dashboardId:  dashboardId,
+						name:         'My little widgie',
+						html:         '<div id=\'bigNumber\'></div>',
+						css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
+						script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
+						json:         '{\n  "bigNumber":500\n}'
+					};
 
-            assert.equal(response.status, 'success');
-            assert(response.widget instanceof Object);
-            dashku.deleteDashboard(dashboardId, function (response) {
-              done();
-            });
+					dashku.createWidget(attributes, function (response) {
 
-          });
+						assert.equal(response.status, 'success');
+						assert(response.widget instanceof Object);
+						dashku.deleteDashboard(dashboardId, function () {
+							done();
+						});
 
-        });
+					});
 
-      });
+				});
 
-      it('should throw an error if the response fails', function (done) {
+			});
 
-        var attributes = {
+			it('should throw an error if the response fails', function (done) {
 
-          dashboardId:  'Rubbish',
-          name:         'My little widgie',
-          html:         '<div id=\'bigNumber\'></div>',
-          css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
-          script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
-          json:         '{\n  "bigNumber":500\n}'          
+				var attributes = {
 
-        };
+					dashboardId:  'Rubbish',
+					name:         'My little widgie',
+					html:         '<div id=\'bigNumber\'></div>',
+					css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
+					script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
+					json:         '{\n  "bigNumber":500\n}'
 
-        dashku.createWidget(attributes, function (response) {
+				};
 
-          assert.equal(response.status, 'failure');
-          assert.equal(response.reason, 'dashboard with id Rubbish not found');
-          done();
+				dashku.createWidget(attributes, function (response) {
 
-        });
+					assert.equal(response.status, 'failure');
+					assert.equal(response.reason, 'dashboard with id Rubbish not found');
+					done();
 
-      });
+				});
 
-    });
+			});
 
+		});
 
-    describe('updateWidget()', function () {
 
-      it('should return the updated widget object', function (done) {
+		describe('updateWidget()', function () {
 
-        var data = { name: 'ZZZ dashboard'};
-        dashku.createDashboard(data, function (response) {
+			it('should return the updated widget object', function (done) {
 
-          var dashboardId = response.dashboard._id;
+				var data = { name: 'ZZZ dashboard'};
+				dashku.createDashboard(data, function (response) {
 
-          var attributes = {
-            dashboardId:  dashboardId,
-            name:         'My little widgie',
-            html:         '<div id=\'bigNumber\'></div>',
-            css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
-            script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
-            json:         '{\n  "bigNumber":500\n}'          
-          };
+					var dashboardId = response.dashboard._id;
 
-          dashku.createWidget(attributes, function (response) {
+					var attributes = {
+						dashboardId:  dashboardId,
+						name:         'My little widgie',
+						html:         '<div id=\'bigNumber\'></div>',
+						css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
+						script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
+						json:         '{\n  "bigNumber":500\n}'
+					};
 
-            var widgetId = response.widget._id;
+					dashku.createWidget(attributes, function (response) {
 
-            var updatedAttributes = {
-              _id:          widgetId,
-              dashboardId:  dashboardId,
-              name:         'King Widgie'
-            };
+						var widgetId = response.widget._id;
 
-            dashku.updateWidget(updatedAttributes, function (response) {
+						var updatedAttributes = {
+							_id:          widgetId,
+							dashboardId:  dashboardId,
+							name:         'King Widgie'
+						};
 
-              assert(response.status === 'success'); 
-              assert(response.widget instanceof Object)
-              assert(response.widget.name === 'King Widgie');
-              dashku.deleteDashboard(dashboardId, function (response) {
-                done();
-              });
+						dashku.updateWidget(updatedAttributes, function (response) {
 
-            });
+							assert(response.status === 'success');
+							assert(response.widget instanceof Object);
+							assert(response.widget.name === 'King Widgie');
+							dashku.deleteDashboard(dashboardId, function () {
+								done();
+							});
 
-          });
+						});
 
-        });
+					});
 
-      });
+				});
 
+			});
 
-      it('should throw an error if the response fails', function (done) {
 
-        var data = {name: 'ZZZ dashboard'};
-        dashku.createDashboard(data, function (response) {
+			it('should throw an error if the response fails', function (done) {
 
-          var dashboardId = response.dashboard._id;
-          var attributes = {            
-            dashboardId:  dashboardId,
-            name:         'My little widgie',
-            html:         '<div id=\'bigNumber\'></div>',
-            css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
-            script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
-            json:         '{\n  "bigNumber":500\n}'          
-          };
+				var data = {name: 'ZZZ dashboard'};
+				dashku.createDashboard(data, function (response) {
 
-          dashku.createWidget(attributes, function (response) {
+					var dashboardId = response.dashboard._id;
+					var attributes = {
+						dashboardId:  dashboardId,
+						name:         'My little widgie',
+						html:         '<div id=\'bigNumber\'></div>',
+						css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
+						script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
+						json:         '{\n  "bigNumber":500\n}'
+					};
 
-            var widgetId = response.widget._id;
+					dashku.createWidget(attributes, function () {
 
-            var updatedAttributes = {
-              _id:          'WAA',
-              dashboardId:  dashboardId,
-              name:         'King Widgie'
-            };
+						var updatedAttributes = {
+							_id:          'WAA',
+							dashboardId:  dashboardId,
+							name:         'King Widgie'
+						};
 
-            dashku.updateWidget(updatedAttributes, function (response) {
-              assert(response.status === 'failure');
-              assert(response.reason === 'No widget found with id WAA');
-              dashku.deleteDashboard(dashboardId, function (response) {
-                done();
-              });
-            });
+						dashku.updateWidget(updatedAttributes, function (response) {
+							assert(response.status === 'failure');
+							assert(response.reason === 'No widget found with id WAA');
+							dashku.deleteDashboard(dashboardId, function () {
+								done();
+							});
+						});
 
-          });
+					});
 
-        });
+				});
 
-      });
+			});
 
-    });
+		});
 
-    describe('deleteWidget()', function () {
+		describe('deleteWidget()', function () {
 
 
-      it('should return the id of the deleted widget', function (done) {
+			it('should return the id of the deleted widget', function (done) {
 
-        var data = {name: 'ZZZ dashboard'};
-        dashku.createDashboard(data, function (response) {
+				var data = {name: 'ZZZ dashboard'};
+				dashku.createDashboard(data, function (response) {
 
-          var dashboardId = response.dashboard._id;
-          var attributes = {
-            dashboardId:  dashboardId,
-            name:         'My little widgie',
-            html:         '<div id=\'bigNumber\'></div>',
-            css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
-            script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
-            json:         '{\n  "bigNumber":500\n}'          
-          };
+					var dashboardId = response.dashboard._id;
+					var attributes = {
+						dashboardId:  dashboardId,
+						name:         'My little widgie',
+						html:         '<div id=\'bigNumber\'></div>',
+						css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
+						script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
+						json:         '{\n  "bigNumber":500\n}'
+					};
 
-          dashku.createWidget(attributes, function (response) {
-            var widgetId = response.widget._id;
-            dashku.deleteWidget(dashboardId, widgetId, function (response) {
-              assert.equal(response.status, 'success');
-              assert.equal(response.widgetId, widgetId);
-              dashku.deleteDashboard(dashboardId, function (response) {
-                done();
-              });
-            });
-          });
+					dashku.createWidget(attributes, function (response) {
+						var widgetId = response.widget._id;
+						dashku.deleteWidget(dashboardId, widgetId, function (response) {
+							assert.equal(response.status, 'success');
+							assert.equal(response.widgetId, widgetId);
+							dashku.deleteDashboard(dashboardId, function () {
+								done();
+							});
+						});
+					});
 
-        });
+				});
 
-      });
+			});
 
 
-      it('should throw an error if the response fails', function (done) {
+			it('should throw an error if the response fails', function (done) {
 
-        var data = {name: 'ZZZ dashboard'};
-        dashku.createDashboard(data, function (response) {
+				var data = {name: 'ZZZ dashboard'};
+				dashku.createDashboard(data, function (response) {
 
-          var dashboardId = response.dashboard._id;
-          var attributes = {
-            dashboardId:  dashboardId,
-            name:         'My little widgie',
-            html:         '<div id=\'bigNumber\'></div>',
-            css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
-            script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
-            json:         '{\n  "bigNumber":500\n}'          
-          };
+					var dashboardId = response.dashboard._id;
+					var attributes = {
+						dashboardId:  dashboardId,
+						name:         'My little widgie',
+						html:         '<div id=\'bigNumber\'></div>',
+						css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
+						script:       "// The widget's html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on('load', function(data){\n  console.log('loaded');\n});\n// This runs when the widget receives a transmission\nthis.on('transmission', function(data){\n  widget.find('#bigNumber').text(data.bigNumber);\n});",
+						json:         '{\n  "bigNumber":500\n}'
+					};
 
-          dashku.createWidget(attributes, function (response) {
+					dashku.createWidget(attributes, function (response) {
 
-            var widgetId = response.widget._id;
-            dashku.deleteWidget('Waa', widgetId, function (response) {
+						var widgetId = response.widget._id;
+						dashku.deleteWidget('Waa', widgetId, function (response) {
 
-              assert.equal(response.status, 'failure');
-              assert.equal(response.reason, 'No dashboard found with id Waa');
-              dashku.deleteDashboard(dashboardId, function (response) {
-                done();
-              });
+							assert.equal(response.status, 'failure');
+							assert.equal(response.reason, 'No dashboard found with id Waa');
+							dashku.deleteDashboard(dashboardId, function () {
+								done();
+							});
 
-            });
+						});
 
-          });
+					});
 
 
-        });
+				});
 
 
-      });
+			});
 
-    });
+		});
 
 
-    describe('getWidgets()', function () {
+		describe('getWidgets()', function () {
 
-      it('should return an array of widget objects for a given dashboard');
+			it('should return an array of widget objects for a given dashboard');
 
-      it('should throw an error if the response fails');
+			it('should throw an error if the response fails');
 
-    });
+		});
 
-    describe('getWidget()', function () {
+		describe('getWidget()', function () {
 
-      it('should return a widget object, given a widget id');
+			it('should return a widget object, given a widget id');
 
-      it('should throw an error if the response fails');
+			it('should throw an error if the response fails');
 
-    });
+		});
 
-  });
+	});
 
-  describe('transmission', function () {
+	describe('transmission', function () {
 
-    it('should return a success status', function (done) {
+		it('should return a success status', function (done) {
 
-      dashku.getDashboards(function (response) {
+			dashku.getDashboards(function (response) {
 
-        var dash;
+				var dash;
 
-        response.dashboards.forEach(function (dashboard) { if (dashboard.widgets.length > 0) dash = dashboard; });
+				response.dashboards.forEach(function (dashboard) { if (dashboard.widgets.length > 0) { dash = dashboard; } });
 
-        var widget = dash.widgets[0];
+				var widget = dash.widgets[0];
 
-        var data = widget.json;
+				var data = widget.json;
 
-        dashku.transmission(data, function (response) {
-          assert.equal(response.status, 'success');
-          done();
-        });
+				dashku.transmission(data, function (response) {
+					assert.equal(response.status, 'success');
+					done();
+				});
 
-      });
+			});
 
-    });
+		});
 
-    it('should throw an error if the response fails', function (done) {
-      dashku.setApiKey('waa', function () {
-        dashku.transmission({}, function (response) {
+		it('should throw an error if the response fails', function (done) {
+			dashku.setApiKey('waa', function () {
+				dashku.transmission({}, function (response) {
 
-          assert.equal(response.status, 'failure');
-          assert.equal(response.reason, 'Couldn\'t find a user with that API key');
-          done();
+					assert.equal(response.status, 'failure');
+					assert.equal(response.reason, 'Couldn\'t find a user with that API key');
+					done();
 
-        });
+				});
 
-      });
+			});
 
-    });
+		});
 
-  });
+	});
 
 });
