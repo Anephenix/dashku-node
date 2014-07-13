@@ -15,13 +15,15 @@
     "optimist":"latest"
   },
   "devDependencies": {
-    "mocha":"latest",
-    "coffee-script":"latest"
+    "mocha":"latest"
   },
   "optionalDependencies": {},
   "main": "./lib/dashku",  
   "engines": {
     "node": "*"
+  },
+  "scripts": {
+    "test" : "node_modules/.bin/mocha test/"
   },
   "bin": "./bin/dashku-update.js"
 }
