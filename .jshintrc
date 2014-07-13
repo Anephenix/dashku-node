@@ -1,0 +1,29 @@
+{
+  "browser": false,
+  "node": true,
+
+  "strict": true,
+  "undef": true,
+  "unused": true,
+  "latedef": "nofunc",
+  "immed": true,
+  "noarg": true,
+  "indent": 4,
+  "trailing": true,
+  "quotmark": "single",
+  "camelcase": true,
+  "newcap": true,
+  "curly": false,
+  "eqeqeq": true,
+  "predef": [
+    "require",
+    "define",
+    "before",
+    "after",
+    "describe",
+    "it",
+    "beforeEach",
+    "afterEach",
+    "expect"
+  ]
+}
