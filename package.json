@@ -1,6 +1,8 @@
 {
   "author": "Paul Jensen <admin@dashku.com>",
-  "contributors": [ "Nick Niemeir <nick.niemeir@gmail.com>" ],
+  "contributors": [
+    "Nick Niemeir <nick.niemeir@gmail.com>"
+  ],
   "name": "dashku",
   "description": "A wrapper to the dashku API",
   "version": "0.1.1",
@@ -10,18 +12,22 @@
     "url": "git://github.com/Anephenix/dashku-node.git"
   },
   "dependencies": {
-    "request":"latest",
-    "config-chain":"latest",
-    "optimist":"latest"
+    "config-chain": "latest",
+    "jshint": "^2.5.2",
+    "optimist": "latest",
+    "request": "latest"
   },
   "devDependencies": {
-    "mocha":"latest",
-    "coffee-script":"latest"
+    "mocha": "latest"
   },
   "optionalDependencies": {},
-  "main": "./lib/dashku",  
+  "main": "./lib/dashku",
   "engines": {
     "node": "*"
+  },
+  "scripts": {
+    "lint": "node_modules/.bin/jshint .",
+    "test": "node_modules/.bin/mocha test/"
   },
   "bin": "./bin/dashku-update.js"
 }
