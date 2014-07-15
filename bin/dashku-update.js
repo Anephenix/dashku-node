@@ -151,14 +151,14 @@ if (argv.p) {
 	}
 
 	var seed = 'module.exports =' +
-		"\n  name: '''" + config.name +
-		"'''\n  json: '''" + scrub(json) +
-		"'''\n  scriptType: '''" + config.scriptType +
-		"'''\n  script: '''" + script +
-		"'''\n  html: '''" + html +
-		"'''\n  css: '''" + css +
-		"'''\n  snapshotUrl: '''" + config.snapshotUrl +
-		"'''\n";
+		'\n  name: """' + config.name +
+		'"""\n  json: """' + scrub(json) +
+		'"""\n  scriptType: """' + config.scriptType +
+		'"""\n  script: """' + script +
+		'"""\n  html: """' + html +
+		'"""\n  css: """' + css +
+		'"""\n  snapshotUrl: """' + config.snapshotUrl +
+		'"""\n';
 
 	fs.writeFile('seed.coffee', seed);
 
