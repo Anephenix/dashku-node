@@ -16,4 +16,4 @@ before_script:
   - NODE_ENV=test npm run dashku-web start & sleep 5
 
 script: 
-  - npm test
+  - npm run cover
