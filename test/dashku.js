@@ -243,7 +243,10 @@ describe('Dashku', function () {
 				};
 				dashku.createDashboard(attributes, function (response) {
 					assert.equal(response.status, 'success');
-					done();
+					dashku.createDashboard({name: 'bob'}, function (response) {
+						assert.equal(response.status, 'success');
+						done();
+					});
 				});
 
 			});
