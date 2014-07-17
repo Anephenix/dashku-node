@@ -13,7 +13,7 @@ services:
 before_script:
   - TEST_USER_PATH=/tmp npm run dashku-web generateTestUser
   - NODE_ENV=test npm run dashku-web regenerateApiKeyDb
-  - NODE_ENV=test npm run dashku-web start
+  - NODE_ENV=test npm run dashku-web start &
 
 script: 
   - npm test
