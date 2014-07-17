@@ -7,7 +7,7 @@ A wrapper to the [dashku.com](http://dashku.com) API. Now made to work with Dash
 [![NPM version](https://badge.fury.io/js/dashku.png)](http://badge.fury.io/js/dashku)
 [![Dependency Status](https://david-dm.org/anephenix/dashku-node.png)](https://david-dm.org/anephenix/dashku-node)
 [![devDependency Status](https://david-dm.org/anephenix/dashku-node/dev-status.png)](https://david-dm.org/anephenix/dashku-node#info=devDependencies)
-
+[![Code Climate](https://codeclimate.com/github/Anephenix/dashku-node.png)](https://codeclimate.com/github/Anephenix/dashku-node)
 
 Install
 ---
