@@ -13,6 +13,20 @@ Install
 
     npm install dashku
 
+Running Tests
+---
+
+    npm install
+    TEST_USER_PATH=/tmp npm run dashku-web generateTestUser
+    NODE_ENV=test npm run dashku-web regenerateApiKeyDb
+    NODE_ENV=test npm run dashku-web start
+
+then
+
+    npm test
+
+
+
 Example Usage
 ---
 
