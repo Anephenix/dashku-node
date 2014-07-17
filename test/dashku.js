@@ -83,6 +83,45 @@ describe('Dashku', function () {
 
 	describe('Dashboards', function () {
 
+		describe('createDashboard()', function () {
+
+			it('should return a dashboard object, given attributes', function (done) {
+				dashku.setApiKey(apiKey, function () {
+
+					var attributes = {
+						name: 'My new dashboard'
+					};
+					dashku.createDashboard(attributes, function (response) {
+						assert.equal(response.status, 'success');
+						assert(response.dashboard instanceof Object);
+						assert.equal(response.dashboard.name, attributes.name);
+						done();
+					});
+
+				});
+
+			});
+
+			it('should throw an error if the response fails', function (done) {
+				dashku.setApiKey('waa', function () {
+
+					var attributes = {
+						name: 'My new dashboard'
+					};
+					dashku.createDashboard(attributes, function (response) {
+
+						assert.equal(response.status, 'failure');
+						assert.equal(response.reason, 'Couldn\'t find a user with that API key');
+						done();
+
+					});
+
+				});
+
+			});
+
+		});
+
 
 		describe('getDashboards()', function () {
 
@@ -139,47 +178,6 @@ describe('Dashku', function () {
 			});
 
 		});
-
-
-		describe('createDashboard()', function () {
-
-			it('should return a dashboard object, given attributes', function (done) {
-				dashku.setApiKey(apiKey, function () {
-
-					var attributes = {
-						name: 'My new dashboard'
-					};
-					dashku.createDashboard(attributes, function (response) {
-						assert.equal(response.status, 'success');
-						assert(response.dashboard instanceof Object);
-						assert.equal(response.dashboard.name, attributes.name);
-						done();
-					});
-
-				});
-
-			});
-
-			it('should throw an error if the response fails', function (done) {
-				dashku.setApiKey('waa', function () {
-
-					var attributes = {
-						name: 'My new dashboard'
-					};
-					dashku.createDashboard(attributes, function (response) {
-
-						assert.equal(response.status, 'failure');
-						assert.equal(response.reason, 'Couldn\'t find a user with that API key');
-						done();
-
-					});
-
-				});
-
-			});
-
-		});
-
 
 		describe('updateDashboard()', function () {
 
