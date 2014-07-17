@@ -5,7 +5,7 @@
   ],
   "name": "dashku",
   "description": "A wrapper to the dashku API",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/Anephenix/dashku-node",
   "repository": {
     "type": "git",
