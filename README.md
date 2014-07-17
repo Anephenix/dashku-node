@@ -3,6 +3,11 @@ Dashku npm
 
 A wrapper to the [dashku.com](http://dashku.com) API. Now made to work with Dashku open source edition.
 
+[![NPM version](https://badge.fury.io/js/dashku.png)](http://badge.fury.io/js/dashku)
+[![Dependency Status](https://david-dm.org/anephenix/dashku-node.png)](https://david-dm.org/anephenix/dashku-node)
+[![devDependency Status](https://david-dm.org/anephenix/dashku-node/dev-status.png)](https://david-dm.org/anephenix/dashku-node#info=devDependencies)
+
+
 Install
 ---
 
@@ -352,4 +357,4 @@ Transmits data to an existing widget, given an object that can be converted to J
 Copyright
 ---
 
-&copy; 2012 Anephenix Ltd. Dashku-node is licensed under the MIT License.
+&copy; 2014 Anephenix Ltd. Dashku-node is licensed under the MIT License.
