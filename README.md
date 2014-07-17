@@ -3,6 +3,7 @@ Dashku npm
 
 A wrapper to the [dashku.com](http://dashku.com) API. Now made to work with Dashku open source edition.
 
+[![Build Status](https://travis-ci.org/Anephenix/dashku-node.png?branch=master)](https://travis-ci.org/Anephenix/dashku-node)
 [![NPM version](https://badge.fury.io/js/dashku.png)](http://badge.fury.io/js/dashku)
 [![Dependency Status](https://david-dm.org/anephenix/dashku-node.png)](https://david-dm.org/anephenix/dashku-node)
 [![devDependency Status](https://david-dm.org/anephenix/dashku-node/dev-status.png)](https://david-dm.org/anephenix/dashku-node#info=devDependencies)
