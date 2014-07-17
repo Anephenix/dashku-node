@@ -18,6 +18,7 @@
     "request": "latest"
   },
   "devDependencies": {
+    "dashku-web":"0.0.2",
     "mocha": "latest"
   },
   "optionalDependencies": {},

@@ -5,19 +5,49 @@
 // Dependencies
 //
 var assert    = require('assert'),
-	dashku    = require('../lib/dashku');
+		dashku    = require('../lib/dashku'),
+		fs				= require('fs');
 
 
 
 // These are the variables we use to interact with the
 // user and the API - TODO - get these programmatically.
 //
-var apiKey    = 'a4f368ba-0a46-4e3f-a2fd-f1b68ffe64af';
-var apiUrl    = 'http://localhost:3000';
+var apiKey, apiUrl;
 
 
 
 describe('Dashku', function () {
+
+
+	before(function (done) {
+
+		apiUrl = 'http://localhost:3000';
+
+		var filePath = '/tmp/testUser.json';
+		fs.exists(filePath, function (exists) {
+
+			if (!exists) {
+
+				done(new Error('please run the generateTestUser script with TEST_USER_PATH=/tmp as an environment variable'));
+
+			} else {
+
+				fs.readFile(filePath, function (err, data) {
+
+					if (err) { return done(err); }
+
+					apiKey = JSON.parse(data).apiKey;
+
+					done(err);
+
+				});
+
+			}
+
+		});
+
+	});
 
 
 
@@ -205,6 +235,22 @@ describe('Dashku', function () {
 
 
 		describe('deleteDashboard()', function () {
+
+
+
+			before(function (done) {
+
+				var attributes = {
+					name: 'My new dashboard'
+				};
+				dashku.createDashboard(attributes, function (response) {
+					assert.equal(response.status, 'success');
+					done();
+				});
+
+			});
+
+
 
 			it('should return the id of the deleted dashboard', function (done) {
 
@@ -480,6 +526,36 @@ describe('Dashku', function () {
 	});
 
 	describe('transmission', function () {
+
+		before(function (done) {
+
+			dashku.getDashboards(function (response) {
+
+				var dash = response.dashboards[response.dashboards.length-1];
+
+				var dashboardId = dash._id;
+				
+				var attributes = {
+					dashboardId:  dashboardId,
+					name:         'My little widgie',
+					html:         '<div id=\'bigNumber\'></div>',
+					css:          '#bigNumber {\n  padding: 10px;\n  margin-top: 50px;\n  font-size: 36pt;\n  font-weight: bold;\n}',
+					script:       '// The widget\'s html as a jQuery object\nvar widget = this.widget;\n\n// This runs when the widget is loaded\nthis.on(\'load\', function(data){\n  console.log(\'loaded\');\n});\n// This runs when the widget receives a transmission\nthis.on(\'transmission\', function(data){\n  widget.find(\'#bigNumber\').text(data.bigNumber);\n});',
+					json:         '{\n  "bigNumber":500\n}'
+				};
+
+				dashku.createWidget(attributes, function (response) {
+
+					assert.equal(response.status, 'success');
+					assert(response.widget instanceof Object);
+					done();
+
+				});
+
+			});
+
+		});
+
 
 		it('should return a success status', function (done) {
 
