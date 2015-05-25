@@ -3,12 +3,12 @@ Dashku npm
 
 A wrapper to the [dashku.com](http://dashku.com) API. Now made to work with Dashku open source edition.
 
-[![Build Status](https://travis-ci.org/Anephenix/dashku-node.png?branch=master)](https://travis-ci.org/Anephenix/dashku-node)
-[![Coverage Status](https://coveralls.io/repos/Anephenix/dashku-node/badge.png?branch=master)](https://coveralls.io/r/Anephenix/dashku-node?branch=master)
-[![NPM version](https://badge.fury.io/js/dashku.png)](http://badge.fury.io/js/dashku)
-[![Dependency Status](https://david-dm.org/anephenix/dashku-node.png)](https://david-dm.org/anephenix/dashku-node)
-[![devDependency Status](https://david-dm.org/anephenix/dashku-node/dev-status.png)](https://david-dm.org/anephenix/dashku-node#info=devDependencies)
-[![Code Climate](https://codeclimate.com/github/Anephenix/dashku-node.png)](https://codeclimate.com/github/Anephenix/dashku-node)
+[![Build Status](https://travis-ci.org/dashku/dashku-node.svg?branch=master)](https://travis-ci.org/dashku/dashku-node)
+[![Coverage Status](https://coveralls.io/repos/dashku/dashku-node/badge.svg?branch=master)](https://coveralls.io/r/dashku/dashku-node?branch=master)
+[![NPM version](https://badge.fury.io/js/dashku.svg)](http://badge.fury.io/js/dashku)
+[![Dependency Status](https://david-dm.org/dashku/dashku-node.svg)](https://david-dm.org/dashku/dashku-node)
+[![devDependency Status](https://david-dm.org/dashku/dashku-node/dev-status.svg)](https://david-dm.org/dashku/dashku-node#info=devDependencies)
+[![Code Climate](https://codeclimate.com/github/dashku/dashku-node.svg)](https://codeclimate.com/github/dashku/dashku-node)
 
 
 Install
