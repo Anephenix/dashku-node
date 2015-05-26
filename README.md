@@ -374,4 +374,4 @@ Transmits data to an existing widget, given an object that can be converted to J
 Copyright
 ---
 
-&copy; 2014 Anephenix Ltd. Dashku-node is licensed under the MIT License.
+&copy; 2015 Anephenix Ltd. The Dashku-node npm module is licensed under the MIT License.
